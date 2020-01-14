@@ -3,3 +3,5 @@ icons/
 js-package/
 package-lock.json
 .idea/
+
+.DS_Store

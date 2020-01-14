@@ -1,13 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Icons, Home} from '@evericons/icons'
+import {EviIcons, eviHome} from '@evericons/icons'
 
 function App() {
   return (
     <div className="App">
-      <Icons icon={Home} width={72} height={72}/>
-      hello
+      <EviIcons icon={eviHome} width={72} height={72}/>
     </div>
   );
 }

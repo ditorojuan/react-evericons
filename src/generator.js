@@ -3,9 +3,14 @@ import {parse} from 'svgson';
 import toCamelCase from "./utils/toCamelCase";
 
 const exportPath = `${__dirname}/../js-package`;
+const filePrefix = 'evi-';
 
 if (!fs.existsSync(exportPath)) {
   fs.mkdirSync(exportPath)
+}
+
+if(fs.existsSync(`${exportPath}/index.js`)) {
+  fs.unlinkSync(`${exportPath}/index.js`);
 }
 
 fs.readdir(`${__dirname}/../icons/svg`, (err, folders) => {
@@ -24,9 +29,9 @@ fs.readdir(`${__dirname}/../icons/svg`, (err, folders) => {
       const svg = fs.readFileSync(`${path}/${icon}.svg`, 'utf8');
       parse(svg).then((svgson) => JSON.stringify(svgson.children)).then((json) => {
         const jsFile = `module.exports = ${json};`;
-        fs.writeFile(`${exportPath}/${icon}.js`, jsFile, {flag: 'w+'}, (err) => {
+        fs.writeFile(`${exportPath}/${filePrefix + icon}.js`, jsFile, {flag: 'w+'}, (err) => {
 
-          fs.writeFileSync(`${exportPath}/index.js`, `export { default as ${toCamelCase(icon)} } from "./${icon}.js" \n`, {flag: 'a'}, (err) => {});
+          fs.writeFileSync(`${exportPath}/index.js`, `export { default as ${toCamelCase(filePrefix + icon)} } from "./${filePrefix + icon}.js" \n`, {flag: 'a'}, (err) => {});
 
           if (err) {
             console.error('Error while saving ' + icon + ' file', err);
@@ -35,7 +40,6 @@ fs.readdir(`${__dirname}/../icons/svg`, (err, folders) => {
           console.log("Succesfully created " + icon + " file");
         })
       });
-
     }
   }
 });

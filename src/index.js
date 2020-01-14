@@ -1,3 +1,3 @@
-export {default as Icons} from './Icons'
-export * from '../iconFiles'
+export {default as EviIcons} from './Icons'
+export * from '../js-package'
 
