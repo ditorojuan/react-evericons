@@ -2,11 +2,12 @@
   "name": "@evericons/icons",
   "version": "1.0.0",
   "description": "SVG, CSS toolkit for Evericons icon-set by Aleksey Popov(http://www.alekseypopov.com/)",
-  "main": "index.js",
+  "main": "dist/bundle.js",
   "scripts": {
     "test": "jest",
     "start": "nodemon --exec babel-node ./src/index.js",
-    "generate:iconsFile": "babel-node ./src/generator.js"
+    "generate:iconsFile": "babel-node ./src/generator.js",
+    "build": "rollup -c"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,9 @@
     "icons",
     "web",
     "svg",
-    "css"
+    "css",
+    "react",
+    "evermotion"
   ],
   "author": "Juan Di Toro",
   "license": "ISC",
@@ -25,16 +28,20 @@
     "url": "https://github.com/ditorojuan/evericons-toolkit/issues"
   },
   "homepage": "https://github.com/ditorojuan/evericons-toolkit#readme",
-  "dependencies": {
-    "rollup": "^1.29.0"
-  },
   "devDependencies": {
     "@babel/cli": "^7.8.0",
     "@babel/core": "^7.8.0",
     "@babel/node": "^7.8.0",
     "@babel/preset-env": "^7.8.2",
+    "@babel/preset-react": "^7.8.3",
+    "@rollup/plugin-json": "^4.0.1",
     "jest": "^24.9.0",
     "nodemon": "^2.0.2",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "rollup": "^1.29.0",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.1.0"
   }
 }
