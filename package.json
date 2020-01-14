@@ -2,7 +2,9 @@
   "name": "@evericons/icons",
   "version": "1.0.0",
   "description": "SVG, CSS toolkit for Evericons icon-set by Aleksey Popov(http://www.alekseypopov.com/)",
-  "main": "dist/bundle.js",
+  "main": "dist/bundle.umd.js",
+  "module": "dist/bundle.esm.js",
+  "side-effects": "false",
   "scripts": {
     "test": "jest",
     "start": "nodemon --exec babel-node ./src/index.js",
@@ -35,6 +37,10 @@
     "@babel/preset-env": "^7.8.2",
     "@babel/preset-react": "^7.8.3",
     "@rollup/plugin-json": "^4.0.1",
+    "@types/jest": "^24.0.25",
+    "agadoo": "^2.0.0",
+    "babel-jest": "^24.9.0",
+    "i": "^0.3.6",
     "jest": "^24.9.0",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
@@ -45,6 +51,7 @@
     "rollup-plugin-commonjs": "^10.1.0"
   },
   "dependencies": {
+    "react-proptypes": "^1.0.0",
     "svgson": "^4.0.0"
   }
 }
