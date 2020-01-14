@@ -1,8 +1,8 @@
 import fs from 'fs';
 import {parse} from 'svgson';
-import toCamelCase from "../utils/toCamelCase";
+import toCamelCase from "./utils/toCamelCase";
 
-const exportPath = `${__dirname}/../iconFiles`;
+const exportPath = `${__dirname}/../js-package`;
 
 if (!fs.existsSync(exportPath)) {
   fs.mkdirSync(exportPath)
@@ -22,7 +22,7 @@ fs.readdir(`${__dirname}/../icons/svg`, (err, folders) => {
     for (let i = 0; i < icons.length; i++) {
       const icon = icons[i].slice(0, icons[i].indexOf('.svg'));
       const svg = fs.readFileSync(`${path}/${icon}.svg`, 'utf8');
-      parse(svg).then((svgson) => JSON.stringify(svgson)).then((json) => {
+      parse(svg).then((svgson) => JSON.stringify(svgson.children)).then((json) => {
         const jsFile = `module.exports = ${json};`;
         fs.writeFile(`${exportPath}/${icon}.js`, jsFile, {flag: 'w+'}, (err) => {
 
