@@ -1,34 +1,42 @@
 import fs from 'fs';
-import pathExtractor from "../utils/pathExtractor";
+import {parse} from 'svgson';
+import toCamelCase from "../utils/toCamelCase";
 
-let dict_pathsByName = {};
-const exportPath = `${__dirname}/../const`;
+const exportPath = `${__dirname}/../iconFiles`;
+
+if (!fs.existsSync(exportPath)) {
+  fs.mkdirSync(exportPath)
+}
 
 fs.readdir(`${__dirname}/../icons/svg`, (err, folders) => {
   // ignore .DS_Store
   const categories = folders.filter((name) => name !== '.DS_Store');
-  for (const index in categories) {
-    const category = categories[index];
+  for (let i = 0; i < categories.length; i++) {
+    const category = categories[i];
     const path = `${__dirname}/../icons/svg/${category}`;
     const files = fs.readdirSync(path);
 
     // ignore .DS_Store
     const icons = files.filter((name) => name !== '.DS_Store');
 
-    for (const index in icons) {
-      const icon = icons[index].slice(0, icons[index].indexOf('.svg'));
-      const iconFile = fs.readFileSync(`${path}/${icon}.svg`, 'utf8');
-      dict_pathsByName[`${icon}`] = pathExtractor(iconFile);
+    for (let i = 0; i < icons.length; i++) {
+      const icon = icons[i].slice(0, icons[i].indexOf('.svg'));
+      const svg = fs.readFileSync(`${path}/${icon}.svg`, 'utf8');
+      parse(svg).then((svgson) => JSON.stringify(svgson)).then((json) => {
+        const jsFile = `module.exports = ${json};`;
+        fs.writeFile(`${exportPath}/${icon}.js`, jsFile, {flag: 'w+'}, (err) => {
+
+          fs.writeFileSync(`${exportPath}/index.js`, `export { default as ${toCamelCase(icon)} } from "./${icon}.js" \n`, {flag: 'a'}, (err) => {});
+
+          if (err) {
+            console.error('Error while saving ' + icon + ' file', err);
+            return;
+          }
+          console.log("Succesfully created " + icon + " file");
+        })
+      });
+
     }
   }
-  if (!fs.existsSync(exportPath)) {
-    fs.mkdirSync(exportPath)
-  }
-  fs.writeFile(`${exportPath}/icons.json`, JSON.stringify(dict_pathsByName), { flag: 'w+' }, (err) => {
-    if (err) {
-      console.error('Error while saving file', err);
-      return;
-    }
-    console.log("Succesfully created paths file");
-  });
 });
+
