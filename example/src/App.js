@@ -1,12 +1,13 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Icons} from '@evericons/icons'
+import {Icons, Home} from '@evericons/icons'
 
 function App() {
   return (
     <div className="App">
-      <Icons icon='kanban' width={72} height={72}/>
+      <Icons icon={Home} width={72} height={72}/>
+      hello
     </div>
   );
 }
